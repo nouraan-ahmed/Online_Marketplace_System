@@ -6,3 +6,17 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<br />
+<div class=" login">
+    <div class="container mt-2">
+        <div class="row">
+            <div style="margin:auto;" class="col-lg-6  ">
+                <form class="card card-body">
+                    <a class="btn btn-dark w-auto text-center" asp-controller="User" asp-action="Login" role="button">Login</a>
+                    <hr />
+                    <a class="btn btn-success" asp-controller="User" asp-action="Register" role="button">Create New Account</a>
+                </form>
+            </div>
+        </div> <!--row end -->
+    </div><!--container end -->
+</div><!--log in end -->
