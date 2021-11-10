@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Online_MarketPlace_System.Data;
 using Online_MarketPlace_System.Models;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,18 @@ namespace Online_MarketPlace_System.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly MarketplaceDbContext _db;
+ 
+        public HomeController(ILogger<HomeController> logger, MarketplaceDbContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
         {
+            var productList = _db.Product.ToList();
+            ViewData["products"] = productList;
             return View();
         }
 

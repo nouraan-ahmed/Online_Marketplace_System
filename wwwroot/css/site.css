@@ -14,17 +14,15 @@ body
 {
     font-family: 'Poppins', sans-serif;
 }
-.BackgroundImg{
-    background-image: url(back.jpg);
+.BackgroundImg {
+    background-image: url(shop1.jpg);
     background-size:100% 100%;
-    height:100vh;
-  
+    height: 100vh;
 }
-.navbar
-{
-    display:flex !important;
-    align-items:center !important;
-    background-color:red;
+.navbar {
+    display: flex !important;
+    align-items: center !important;
+    background-color: #C88730 !important;
 }
 nav
 {
@@ -46,11 +44,10 @@ h2
     margin-top:50%;
     font-size:50px;
 }
-.btn
-{
-    background:red;
-    color:white;
-    transition:color 0.5s !important;
+.btn {
+    background: #C88730;
+    color: white;
+    transition: color 0.5s !important;
 }
 .HomeProducts
 {
@@ -73,7 +70,7 @@ h3
 }
 .productsTitle::after {
     content: '';
-    background: #ff523b;
+    background: #C88730;
     width: 80px;
     height: 5px;
     border-radius: 5px;
@@ -83,10 +80,10 @@ h3
     transform: translateX(-50%);
     margin-top: 10px;
 }
-i
-{
-    color:#ff523b;
+i {
+    color: #C88730;
 }
+
 .card:hover
 {
     transform:translateY(-5px)
@@ -113,10 +110,9 @@ form
 {
     margin-top:1rem;
 }
-.subscribe:hover
-{
-    color:black;
-    background-color:red;
+.subscribe:hover {
+    color: black;
+    background-color: #C88730;
 }
 .togger
 {
