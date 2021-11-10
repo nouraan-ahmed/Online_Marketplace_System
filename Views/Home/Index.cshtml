@@ -1,22 +1,105 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<div class="Home">
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+        <a class="navbar-brand" href="#">Shop Me</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<br />
-<div class=" login">
-    <div class="container mt-2">
-        <div class="row">
-            <div style="margin:auto;" class="col-lg-6  ">
-                <form class="card card-body">
-                    <a class="btn btn-dark w-auto text-center" asp-controller="User" asp-action="Login" role="button">Login</a>
-                    <hr />
-                    <a class="btn btn-success" asp-controller="User" asp-action="Register" role="button">Create New Account</a>
-                </form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Stores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="~/css/cart.png" width="30px" height="30px" alt="cart">
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="BackgroundImg">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 caption">
+                    <h2>The Fashion is in your hands</h2>
+                    <a class="btn mt-1" href="#">Register Now</a>
+                </div>
             </div>
-        </div> <!--row end -->
-    </div><!--container end -->
-</div><!--log in end -->
+
+        </div>
+    </div>
+</div>
+<div class="LatestProducts">
+    <h3 class="text-center productsTitle">Latest Products</h3>
+    <div class="HomeProducts ">
+        <div class="row d-flex justify-content-center container mx-auto">
+            @for (var i = 0; i < 3; i++)
+            {
+                <div class="card col-sm-12 col-md-3 ">
+                    <img class="card-img-top" src="~/css/product-1.jpg" alt="Card image cap">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">T-Shirt</h5>
+                        <h5>50$</h5>
+                        @for (var j = 0; j < 5; j++)
+                        {
+                            <i class="fas fa-star"></i>
+                        }
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn">Add to Cart</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="LatestProducts">
+    <h3 class="text-center productsTitle">Top Products</h3>
+    <div class="HomeProducts ">
+        <div class="row d-flex justify-content-center container mx-auto">
+            @for (var i = 0; i < 8; i++)
+            {
+                <div class="card col-sm-12 col-md-3">
+                    <img class="card-img-top" src="~/css/product-1.jpg" alt="Card image cap">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">T-Shirt</h5>
+                        <h5>50$</h5>
+                        @for (var j = 0; j < 5; j++)
+                        {
+                            <i class="fas fa-star"></i>
+                        }
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn">Add to Cart</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+ </div>
+    
+       <footer>
+           <form class="container">
+               <div class="form-group row">
+                   <div class="col-sm-10">
+                       <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Subscribe to get the latest updates">
+                       <button type="button" class="btn btn-info subscribe">Subscribe</button>
+                   </div>
+               </div>
+               <div class="row d-flex justify-content-center">
+                   <img class="col-3" src="~/css/logo-coca-cola.png" alt="cocacola">
+                   <img class="col-3" src="~/css/logo-oppo.png" alt="oppo">
+                   <img class="col-3" src="~/css/logo-philips.png" alt="philips">
+                   <img class="col-3" src="~/css/logo-paypal.png" alt="paypal">
+               </div>
+           </form>
+       </footer>
