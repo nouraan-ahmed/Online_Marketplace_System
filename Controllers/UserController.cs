@@ -19,9 +19,28 @@ namespace Online_MarketPlace_System.Controllers
             _db = db;
         }
         [HttpGet]
+        public IActionResult Success()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            IEnumerable<Product> objList = _db.Product;
+            return View(objList);
+          
+        }
+
+        [HttpGet]
+        public IActionResult Part()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
-            //IEnumerable<User> userList = _db.User;
             return View();
         }
         [HttpPost]
@@ -41,16 +60,15 @@ namespace Online_MarketPlace_System.Controllers
                 //throw error
                 ViewBag.EmailExistError = "You have already signed up";
                 //go to error page
-                return Redirect("Home");
+                return Redirect("/User/Error");
             }
             else
             {
                 _db.Add(us);
                 _db.SaveChanges();
+                return RedirectToAction("Success");
 
             }
-            HttpContext.Session.SetInt32("User_Reg_Id", (int)us.Id);
-            return Redirect("Home/Regestration_success");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -78,11 +96,38 @@ namespace Online_MarketPlace_System.Controllers
                 if (BCrypt.Net.BCrypt.Verify(usm.Password, Data[0].Password))
                 {
                     User us = new User();
-                    HttpContext.Session.SetInt32("User_Reg_Id", Data[0].Id);
-               
+                    return RedirectToAction("Profile");
+
                 }
             }
-            return Redirect("/User/profileUser");
+            return Redirect("/User/notlog");
+        }
+
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddProduct(ProductModel entity)
+        {
+            Product pro = new Product
+            {
+                Name = entity.Name,
+                Price = entity.Price,
+                Quantity = entity.Quantity,
+                Description = entity.Description,
+                Category = entity.Category,
+                Id = entity.Id,
+            };
+            if (ModelState.IsValid)
+            {
+                _db.Add(pro);
+                _db.SaveChanges();
+                return RedirectToAction("Profile");
+            }
+            return View(entity);
         }
     }
 }
