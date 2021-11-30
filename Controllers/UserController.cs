@@ -129,5 +129,81 @@ namespace Online_MarketPlace_System.Controllers
             }
             return View(entity);
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id ==null || id == 0 )
+            {
+                return NotFound();
+            }
+
+            var instance = _db.Product.Find(id);
+            if (instance==null)
+            {
+                return NotFound();
+            }
+
+            return View(instance);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductModel obj)
+        {
+            Product pro = new Product
+            {
+                Name = obj.Name,
+                Price = obj.Price,
+                Quantity = obj.Quantity,
+                Description = obj.Description,
+                Category = obj.Category,
+                Id = obj.Id,
+            };
+            if (ModelState.IsValid)
+            {
+                _db.Update(pro);
+                _db.SaveChanges();
+                return RedirectToAction("Profile");
+            }
+
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+             var instance = _db.Product.Find(id);
+           // Product instance = _db.Product.Include(u => u.Quantity).Include(u => u.Price).FirstOrDefault(u => u.Id == id);
+
+            if (instance == null)
+            {
+                return NotFound();
+            }
+
+            return View(instance);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Deleteconfirm(int? id)
+        {
+            var obj = _db.Product.Find(id);
+
+            if (obj==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _db.Remove(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Profile");
+            }
+
+        }
+
     }
 }
