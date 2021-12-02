@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using MySql.Data.MySqlClient;
 
 namespace Online_MarketPlace_System.Controllers
 {

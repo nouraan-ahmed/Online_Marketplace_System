@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using Online_MarketPlace_System.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace Online_MarketPlace_System.Data
 {
     public class MarketplaceDbContext:DbContext
     {
+      
         public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options) : base(options)
         {
-                
+
         }
         public DbSet<User> User { get; set; }
         public DbSet<Product> Product { get; set; }
