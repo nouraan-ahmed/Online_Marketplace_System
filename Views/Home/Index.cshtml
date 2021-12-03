@@ -10,7 +10,10 @@
             <div class="row">
                 <div class="col-4 caption">
                     <h2>The Fashion is in your hands</h2>
+                   @if (ViewBag.Reg_Id == 0)
+                   {
                     <a class="btn mt-1" href="/User/Register">Register Now</a>
+                   }
                 </div>
             </div>
 
@@ -37,7 +40,7 @@
                                 {
                                     <i class="fas fa-star"></i>
                                 }
-                                <a href="#" class="btn mx-auto">Add to Cart</a>
+                                <a href="/User/Login" class="btn mx-auto">Add to Cart</a>
                             </div>
                         
                         </div>

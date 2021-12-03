@@ -35,19 +35,22 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Stores</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/User/Login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/User/Register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <img src="~/css/cart.png" width="30px" height="30px" alt="cart">
-                </a>
-            </li>
+            @if (ViewBag.Reg_Id == 0)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/User/Login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/User/Register">Register</a>
+                </li>
+            }
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="~/css/cart.png" width="30px" height="30px" alt="cart">
+                    </a>
+                </li>
 
-        </ul>
+            </ul>
     </div>
 </nav>
 

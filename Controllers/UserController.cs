@@ -19,6 +19,11 @@ namespace Online_MarketPlace_System.Controllers
         {
             _db = db;
         }
+        public IActionResult Index()
+        {
+            HttpContext.Session.SetInt32("Reg_Id", 0);
+            return View();
+        }
         [HttpGet]
         public IActionResult Success()
         {
@@ -48,6 +53,7 @@ namespace Online_MarketPlace_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(UserModel usm)
         {
+
             User us = new User
             {
                 Name = usm.Name,
@@ -67,6 +73,7 @@ namespace Online_MarketPlace_System.Controllers
             {
                 _db.Add(us);
                 _db.SaveChanges();
+                HttpContext.Session.SetInt32("Reg_Id", (int)us.Id);
                 return RedirectToAction("Success");
 
             }
@@ -97,10 +104,12 @@ namespace Online_MarketPlace_System.Controllers
                 if (BCrypt.Net.BCrypt.Verify(usm.Password, Data[0].Password))
                 {
                     User us = new User();
+                    HttpContext.Session.SetInt32("Reg_Id", (int)us.Id);
                     return RedirectToAction("Profile");
 
                 }
             }
+            
             return Redirect("/User/notlog");
         }
 

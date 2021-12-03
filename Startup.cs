@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Online_MarketPlace_System.Data;
+using System;
 
 namespace Online_MarketPlace_System
 {
@@ -22,11 +23,15 @@ namespace Online_MarketPlace_System
         {
             services.AddDbContext<MarketplaceDbContext>(options =>
             {
-                options.UseMySQL(Configuration.GetConnectionString("MarketplaceConnectionString"));
+                options.UseSqlServer(Configuration.GetConnectionString("MarketplaceConnectionString"));
+                // options.UseMySQL(Configuration.GetConnectionString("MarketplaceConnectionString"));
             });
             //services.Add(new ServiceDescriptor(typeof(MarketplaceDbContext), new MarketplaceDbContext(Configuration.GetConnectionString("MarketplaceConnectionString"))));
 
             services.AddControllersWithViews();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(240);//You can set Time (4hrs)   
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +49,7 @@ namespace Online_MarketPlace_System
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

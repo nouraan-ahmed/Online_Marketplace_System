@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Online_MarketPlace_System.Data;
 using Online_MarketPlace_System.Models;
@@ -25,6 +26,9 @@ namespace Online_MarketPlace_System.Controllers
         {
             var productList = _db.Product.ToList();
             ViewData["products"] = productList;
+            HttpContext.Session.SetInt32("Reg_Id", 0);
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+            ViewBag.Reg_Id = Reg_Id;
             return View();
         }
 
