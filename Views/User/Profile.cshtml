@@ -42,6 +42,8 @@
                         <tbody>
                             @foreach (var obj in Model)
                             {
+                                @if (@obj.User_Id== ViewBag.Id)
+                                {
                             <tr>
                                 <td width="50%">@obj.Name</td>
                                 <td width="10%">@obj.Price</td>
@@ -58,7 +60,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            }
+                                    }
+                                }
                         </tbody>
                     </table>
                 }
