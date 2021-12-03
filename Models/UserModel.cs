@@ -8,6 +8,9 @@ namespace Online_MarketPlace_System.Models
 {
     public class UserModel
     {
+
+        [Required]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
