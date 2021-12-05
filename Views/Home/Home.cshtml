@@ -1,0 +1,64 @@
+﻿
+
+@{
+    var products = (List<Product>)ViewData["products"];
+}
+
+    <div class="LatestProducts">
+        <h3 class="text-center productsTitle">Latest Products</h3>
+        <div class="HomeProducts ">
+            <div class="row d-flex justify-content-center container mx-auto">
+                @foreach (var product in @products)
+                {
+                <div class="col-sm-12 col-md-4">
+                    <a class="w-100" asp-action="SelectProduct" asp-controller="Product" asp-route-id="@product.Id" role="button">
+                        <div class="card w-100 shadow p-3 mb-5 bg-white rounded" id="@product.Id">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <img class="card-img-top embed-responsive-item" src="@product.Image" alt="@product.Name">
+                            </div>
+
+                            <div class="card-body w-100 d-flex flex-column justify-content-center align-items-center text-center">
+                                <h5 class="card-title">@product.Name</h5>
+                                <h5>@product.Price $</h5>
+                                @for (var j = 0; j < new Random().Next(1, 5); j++)
+                                {
+                                <i class="fas fa-star"></i>
+                                }
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="LatestProducts">
+        <h3 class="text-center productsTitle">Top Products</h3>
+        <div class="HomeProducts ">
+            <div class="row d-flex justify-content-center container mx-auto">
+                @foreach (var product in @products)
+                {
+                <div class="col-sm-12 col-md-4">
+                    <a class="w-100" asp-action="SelectProduct" asp-controller="Product" asp-route-id="@product.Id" role="button">
+                        <div class="card w-100 shadow p-3 mb-5 bg-white rounded" id="@product.Id">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <img class="card-img-top embed-responsive-item" src="@product.Image" alt="@product.Name">
+                            </div>
+
+                            <div class="card-body w-100 d-flex flex-column justify-content-center align-items-center text-center">
+                                <h5 class="card-title preventdefault">@product.Name</h5>
+                                <h5 class="preventdefault">@product.Price $</h5>
+                                @for (var j = 0; j < new Random().Next(1, 5); j++)
+                                {
+                                <i class="fas fa-star"></i>
+                                }
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                }
+            </div>
+        </div>
+    </div>

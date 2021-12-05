@@ -35,7 +35,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Stores</a>
             </li>
-            @if (ViewBag.Reg_Id == 0)
+            @if (ViewBag.Reg_Id != 0)
             {
                 <li class="nav-item">
                     <a class="nav-link" href="/User/Login">Login</a>
@@ -44,7 +44,7 @@
                     <a class="nav-link" href="/User/Register">Register</a>
                 </li>
             }
-            @if (ViewBag.Reg_Id != 0)
+            @if (ViewBag.Reg_Id == 0)
             {
             <li class="nav-item">
                 <a class="nav-link" href="/Home/Index" action="Logout">LogOut</a>

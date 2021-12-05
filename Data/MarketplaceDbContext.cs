@@ -19,5 +19,6 @@ namespace Online_MarketPlace_System.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Online_MarketPlace_System.Models.PaymentVM> PaymentVM { get; set; }
     }
 }

@@ -64,14 +64,14 @@ namespace Online_MarketPlace_System.Controllers
                 //throw error
                 ViewBag.EmailExistError = "You have already signed up";
                 //go to error page
-                HttpContext.Session.SetInt32("User_Reg_Id", (int)TempData["user_reg_id"]);
+                HttpContext.Session.SetInt32("Reg_Id", (int)TempData["user_reg_id"]);
                 return Redirect("/User/Error");
             }
             else
             {
                 _db.Add(us);
                 _db.SaveChanges();
-                HttpContext.Session.SetInt32("User_Reg_Id", (int)TempData["user_reg_id"]);
+                HttpContext.Session.SetInt32("Reg_Id", (int)TempData["user_reg_id"]);
                 return RedirectToAction("Success");
 
             }
@@ -104,8 +104,9 @@ namespace Online_MarketPlace_System.Controllers
                 if (BCrypt.Net.BCrypt.Verify(usm.Password, Data[0].Password))
                 {
                     User us = new User();
-
-                    return RedirectToAction("Profile");
+                    HttpContext.Session.SetInt32("Reg_Id", Data[0].Id);
+                    //return Redirect("/Home/Index");
+                    return RedirectToAction("Home","Home");
 
                 }
 
@@ -115,7 +116,7 @@ namespace Online_MarketPlace_System.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.SetInt32("User_Reg_Id", 0);
+            HttpContext.Session.SetInt32("Reg_Id", 0);
             HttpContext.Session.SetString("User_Email", null);
             return Redirect("/Home/Index");
         }

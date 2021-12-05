@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,13 @@ namespace Online_MarketPlace_System
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MarketplaceConnectionString"));
                 // options.UseMySQL(Configuration.GetConnectionString("MarketplaceConnectionString"));
+            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+            options =>
+            {
+                options.LoginPath = new PathString("/User/Login");
+
             });
             //services.Add(new ServiceDescriptor(typeof(MarketplaceDbContext), new MarketplaceDbContext(Configuration.GetConnectionString("MarketplaceConnectionString"))));
 

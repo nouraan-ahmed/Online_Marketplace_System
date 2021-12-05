@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Online_MarketPlace_System.Data;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Online_MarketPlace_System.Controllers
 {
+   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,11 +26,20 @@ namespace Online_MarketPlace_System.Controllers
 
         public IActionResult Index()
         {
+
+            // HttpContext.Session.SetInt32("Reg_Id", 0);
+            if (HttpContext.Session.GetInt32("Reg_Id")!=null)
+            {
+                int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+                ViewBag.Reg_Id = Reg_Id;
+            }
+            
+            return View();
+        }
+        public IActionResult Home()
+        {
             var productList = _db.Product.ToList();
             ViewData["products"] = productList;
-            HttpContext.Session.SetInt32("Reg_Id", 0);
-            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
-            ViewBag.Reg_Id = Reg_Id;
             return View();
         }
 
