@@ -14,13 +14,13 @@ namespace Online_MarketPlace_System.Controllers
  
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
         private readonly MarketplaceDbContext _db;
+        private readonly MarketDbContext dblow;
 
-        public ProductController(ILogger<ProductController> logger, MarketplaceDbContext db)
+        public ProductController(MarketplaceDbContext db,MarketDbContext db2)
         {
-            _logger = logger;
-            _db = db;
+            this._db = db;
+            this.dblow = db2;
         }
         public IActionResult SelectProduct(int id)
         {

@@ -12,9 +12,11 @@ namespace Online_MarketPlace_System.Controllers
     public class PaymentController : Controller
     {
         private readonly MarketplaceDbContext _db;
-        public PaymentController(MarketplaceDbContext db)
+        private readonly MarketDbContext dblow;
+        public PaymentController(MarketplaceDbContext db,MarketDbContext db2)
         {
-            _db = db;
+           this._db = db;
+            this.dblow = db2;
         }
         public IActionResult Index()
         {

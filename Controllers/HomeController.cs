@@ -15,13 +15,13 @@ namespace Online_MarketPlace_System.Controllers
    
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly MarketplaceDbContext _db;
- 
-        public HomeController(ILogger<HomeController> logger, MarketplaceDbContext db)
+        private readonly MarketDbContext dblow;
+
+        public HomeController(MarketplaceDbContext db, MarketDbContext db2)
         {
-            _logger = logger;
-            _db = db;
+            this._db = db;
+            this.dblow = db2;
         }
 
         public IActionResult Index()

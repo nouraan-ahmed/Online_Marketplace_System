@@ -24,10 +24,11 @@ namespace Online_MarketPlace_System
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MarketplaceDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("MarketplaceConnectionString"));
-                // options.UseMySQL(Configuration.GetConnectionString("MarketplaceConnectionString"));
-            });
+             options.UseMySql(Configuration.GetConnectionString("MarketplaceConnectionString1"), new MySqlServerVersion(new Version())));
+
+            services.AddDbContext<MarketDbContext>(options =>
+             options.UseMySql(Configuration.GetConnectionString("MarketplaceConnectionString2"), new MySqlServerVersion(new Version())));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
             options =>

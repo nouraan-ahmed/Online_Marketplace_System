@@ -1,26 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Online_MarketPlace_System.Data;
 using Online_MarketPlace_System.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Online_MarketPlace_System.Models;
 
 namespace Online_MarketPlace_System.Controllers
 {
     public class UserController : Controller
     {
-        private readonly MarketplaceDbContext _db;
-        public UserController(MarketplaceDbContext db)
+        private readonly MarketplaceDbContext db;
+        private readonly MarketDbContext dblow;
+        public UserController(MarketplaceDbContext db,MarketDbContext db2)
         {
-            _db = db;
+            this.db = db;
+            this.dblow = db2;
         }
         [HttpGet]
         public IActionResult Success()
@@ -56,8 +51,8 @@ namespace Online_MarketPlace_System.Controllers
                 Phone = usm.Phone,
                 Password = BCrypt.Net.BCrypt.HashPassword(usm.Password)
             };
-            TempData["user_reg_id"] = _db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).Single();
-            var EmailExist = _db.User.ToList().Any(u => u.Email == us.Email);
+            TempData["user_reg_id"] = db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).SingleOrDefault();
+            var EmailExist = db.User.ToList().Any(u => u.Email == us.Email);
             
             if (EmailExist)
             {
@@ -69,8 +64,8 @@ namespace Online_MarketPlace_System.Controllers
             }
             else
             {
-                _db.Add(us);
-                _db.SaveChanges();
+                db.Add(us);
+                db.SaveChanges();
                 HttpContext.Session.SetInt32("Reg_Id", (int)TempData["user_reg_id"]);
                 return RedirectToAction("Success");
 
@@ -96,11 +91,11 @@ namespace Online_MarketPlace_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserModel usm)
         {
-            var exist = _db.User.ToList().Any(i => i.Email == usm.Email);
+            var exist = db.User.ToList().Any(i => i.Email == usm.Email);
             HttpContext.Session.SetString("User_Email", usm.Email);
             if (exist)
             {
-                 var Data = _db.User.Where(f => f.Email == usm.Email).Select(s => new { s.Password, s.Id }).ToList();
+                 var Data = db.User.Where(f => f.Email == usm.Email).Select(s => new { s.Password, s.Id }).ToList();
                 if (BCrypt.Net.BCrypt.Verify(usm.Password, Data[0].Password))
                 {
                     User us = new User();
@@ -128,11 +123,11 @@ namespace Online_MarketPlace_System.Controllers
         public IActionResult Profile(User usm)
         {
             string User_Email = HttpContext.Session.GetString("User_Email");
-            var User_id = _db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+            var User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
             ViewData["id_get"] = User_id;
             ViewBag.Id = ViewData["id_get"];
 
-            IEnumerable<Product> objList = _db.Product;
+            IEnumerable<Product> objList = db.Product;
             return View(objList);
 
         }
@@ -141,7 +136,7 @@ namespace Online_MarketPlace_System.Controllers
         public IActionResult AddProduct(ProductModel entity)
         {
             string User_Email = HttpContext.Session.GetString("User_Email");
-            int User_id = _db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+            int User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
             ViewData["id"] = User_id;
             Product pro = new Product();
             pro.Name = entity.Name;
@@ -150,12 +145,12 @@ namespace Online_MarketPlace_System.Controllers
             pro.Description = entity.Description;
             pro.Category = entity.Category;
             pro.Id = entity.Id;
-            pro.User_Id = _db.User.Where(p => p.Id == User_id).Select(o => o.Id).FirstOrDefault();
+            pro.User_Id = db.User.Where(p => p.Id == User_id).Select(o => o.Id).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
-                _db.Add(pro);
-                _db.SaveChanges();
+                db.Add(pro);
+                db.SaveChanges();
                
                 return RedirectToAction("Profile");
             }
@@ -171,7 +166,7 @@ namespace Online_MarketPlace_System.Controllers
                 return NotFound();
             }
 
-            var instance = _db.Product.Find(id);
+            var instance = db.Product.Find(id);
             if (instance == null)
             {
                 return NotFound();
@@ -194,8 +189,8 @@ namespace Online_MarketPlace_System.Controllers
             };
             if (ModelState.IsValid)
             {
-                _db.Update(pro);
-                _db.SaveChanges();
+                db.Update(pro);
+                db.SaveChanges();
                 return RedirectToAction("Profile");
             }
 
@@ -209,7 +204,7 @@ namespace Online_MarketPlace_System.Controllers
                 return NotFound();
             }
 
-            var instance = _db.Product.Find(id);
+            var instance = db.Product.Find(id);
             // Product instance = _db.Product.Include(u => u.Quantity).Include(u => u.Price).FirstOrDefault(u => u.Id == id);
 
             if (instance == null)
@@ -224,7 +219,7 @@ namespace Online_MarketPlace_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Deleteconfirm(int? id)
         {
-            var obj = _db.Product.Find(id);
+            var obj = db.Product.Find(id);
 
             if (obj == null)
             {
@@ -232,8 +227,8 @@ namespace Online_MarketPlace_System.Controllers
             }
             else
             {
-                _db.Remove(obj);
-                _db.SaveChanges();
+                db.Remove(obj);
+                db.SaveChanges();
                 return RedirectToAction("Profile");
             }
 

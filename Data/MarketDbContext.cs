@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Online_MarketPlace_System.Data
 {
-    public class MarketplaceDbContext:DbContext
+    public class MarketDbContext : DbContext
     {
-        public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options) : base(options)
+        public MarketDbContext(DbContextOptions<MarketDbContext> options) : base(options)
         {
 
         }
