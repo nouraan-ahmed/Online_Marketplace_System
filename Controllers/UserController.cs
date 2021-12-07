@@ -53,7 +53,7 @@ namespace Online_MarketPlace_System.Controllers
             };
             TempData["user_reg_id"] = db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).SingleOrDefault();
             var EmailExist = db.User.ToList().Any(u => u.Email == us.Email);
-            
+            var user_id =0;
             if (EmailExist)
             {
                 //throw error
@@ -66,11 +66,19 @@ namespace Online_MarketPlace_System.Controllers
             {
                 db.Add(us);
                 db.SaveChanges();
+                user_id = us.Id;
+                Payment p = new Payment();
+                p.User_Id = user_id;
+                p.Money = 100000;
+                p.Status = "Credit Card";
+                db.Add(p);
+                db.SaveChanges();
                 HttpContext.Session.SetInt32("Reg_Id", (int)TempData["user_reg_id"]);
-                return RedirectToAction("Success");
+                return RedirectToAction("Home", "Home");
 
             }
 
+           
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -122,13 +130,22 @@ namespace Online_MarketPlace_System.Controllers
         [HttpGet]
         public IActionResult Profile(User usm)
         {
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
             string User_Email = HttpContext.Session.GetString("User_Email");
             var User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+            string Reg_Name = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Name).FirstOrDefault();
             ViewData["id_get"] = User_id;
             ViewBag.Id = ViewData["id_get"];
 
-            IEnumerable<Product> objList = db.Product;
-            return View(objList);
+            ViewBag.Name = Reg_Name;
+            var objList = db.Transaction.Where(p => p.User_Id == Reg_Id && p.Status=="Pending").Select(j => j.Product_Id).ToList();
+            var productList = new List<Product>();
+            for (var i = 0; i < objList.Count(); i++)
+            {
+                productList.Add( db.Product.Where(v => v.Id == objList[i]).FirstOrDefault());
+            }
+            ViewData["products"] = productList;
+            return View();
 
         }
         [HttpPost]
@@ -145,13 +162,14 @@ namespace Online_MarketPlace_System.Controllers
             pro.Description = entity.Description;
             pro.Category = entity.Category;
             pro.Id = entity.Id;
+            pro.Image = "https://www.lg.com/lg5-common/images/common/product-default-list-350.jpg";
             pro.User_Id = db.User.Where(p => p.Id == User_id).Select(o => o.Id).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
                 db.Add(pro);
                 db.SaveChanges();
-               
+
                 return RedirectToAction("Profile");
             }
 

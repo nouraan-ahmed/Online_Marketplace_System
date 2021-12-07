@@ -1,85 +1,87 @@
-﻿@model IEnumerable<Online_MarketPlace_System.Models.Product>
+﻿@{
+    var products = (List<Product>)ViewData["products"];
+}
 
-        <div class="container">
-            <h1>Profile User</h1>
+<div class="container">
+    <h1 class="mt-5 text-center">Welcome @ViewBag.Name</h1>
 
-            @{
-                ViewData["Title"] = "Your Profile";
-            }
+    @{
+        ViewData["Title"] = "Your Profile";
+    }
 
-        <div class="container p-3">
-            <div class="row pt-4">
-                <div class="col-6">
-                    <h2 class="text-primary">Products List</h2>
-                </div>
-                <div class="col-6 text-right">
-                    <a asp-action="AddProduct" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> &nbsp; Add New Product
-                    </a>
-                </div>
+    <div class="container">
+        <div class="row ">
+            <div class="col-6">
+                <h2 class="text-primary">Products List</h2>
             </div>
+            <div class="col-6 text-right">
+                <a asp-action="AddProduct" asp-controller="User" role="button" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> &nbsp; Add New Product
+                </a>
+            </div>
+        </div>
 
-            <br /><br />
+        <br /><br />
 
-            @if (Model.Count() > 0)
-            {
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                Name
-                            </th>
+        @if (products.Count() > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
 
-                            <th>
-                                Price
-                            </th>
-                            <th>
-                                Quantity
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var obj in Model)
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in products)
+                    {
+                        @if (@obj.User_Id == ViewBag.Id)
                         {
-                            @if (@obj.User_Id == ViewBag.Id)
-                            {
-                                <tr>
-                                    <td width="50%">@obj.Name</td>
-                                    <td width="10%">@obj.Price</td>
-                                    <td width="20%">@obj.Quantity</td>
+                            <tr>
+                                <td width="50%">@obj.Name</td>
+                                <td width="10%">@obj.Price</td>
+                                <td width="20%">@obj.Quantity</td>
 
-                                    <td class="text-center">
-                                        <div class="w-75 btn-group" role="group">
-                                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
-                                                <i class="far fa-trash-alt"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
+                                <td class="text-center">
+                                    <div class="w-75 btn-group" role="group">
+                                        <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p> No Products you have yet.</p>
-            }
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p> No Products you have yet.</p>
+        }
 
-            <a asp-action="Payment" asp-controller="Payment" role="button" class="btn mt-4">Pay Now</a>
+        <a asp-action="Payment" asp-controller="Payment" role="button" class="btn mt-4">Pay Now</a>
 
+    </div>
+
+    <div class="form-group">
+
+        <div>
+            <a class="btn btn-primary mx-2" href="/Home/Index">Back to the Home Page</a>
         </div>
 
-            <div class="form-group">
-               
-                <div>
-                    <a class="btn btn-primary mx-2" href="/Home/Index">Back to the Home Page</a>
-                </div>
-
-            </div>
-        </div>
+    </div>
+</div>
 

@@ -26,7 +26,7 @@ namespace Online_MarketPlace_System.Controllers
         public IActionResult Payment()
         {
             int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
-            var products = (from p in _db.Transaction select p).Where(f => f.User_Id == Reg_Id).Select(h => h.Product_Id).ToList();
+            var products = (from p in _db.Transaction select p).Where(f => f.User_Id == Reg_Id && f.Status=="Pending").Select(h => h.Product_Id).ToList();
 
             double userMoney = _db.Payment.Where(v => v.Id == Reg_Id).Select(d => d.Money).FirstOrDefault();
             double totalMoney = 0;
@@ -59,8 +59,30 @@ namespace Online_MarketPlace_System.Controllers
 
             return RedirectToAction("savepay", "Payment");
         }
+        [HttpGet]
         public IActionResult savepay()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult savepay(savepayVM svm)
+        {
+            Transaction tr;
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+            //tr = _db.Transaction.FirstOrDefault(s => s.User_Id == Reg_Id);
+            var objList = _db.Transaction.Where(p => p.User_Id == Reg_Id).ToList();
+
+            var productList = new List<Transaction>();
+
+            for (var i = 0; i < objList.Count(); i++)
+            {
+                tr=_db.Transaction.FirstOrDefault(s => s.Status=="Pending");
+                tr.Status = "Done";
+                _db.Update(tr);
+                _db.SaveChanges();
+            }
+            
             return View();
         }
     }

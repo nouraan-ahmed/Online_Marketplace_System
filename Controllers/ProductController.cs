@@ -31,7 +31,8 @@ namespace Online_MarketPlace_System.Controllers
         }
 
         public IActionResult AddToCart(int id)
-        {       
+        {
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
             var product = _db.Product.ToList().Where(p => p.Id == id).FirstOrDefault();
             Transaction tr = new Transaction();
             tr.Seller_Id =(int) product.User_Id;
@@ -39,6 +40,12 @@ namespace Online_MarketPlace_System.Controllers
             tr.Status = "Pending";
             tr.Product_Id = id;
             _db.Add(tr);
+            _db.SaveChanges();
+            
+            Product p = new Product();
+            p = _db.Product.FirstOrDefault(s => s.Id == id);
+            p.User_Id = Reg_Id;
+            _db.Update(p);
             _db.SaveChanges();
 
             return RedirectToAction("Profile","User");
