@@ -134,17 +134,26 @@ namespace Online_MarketPlace_System.Controllers
             string User_Email = HttpContext.Session.GetString("User_Email");
             var User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
             string Reg_Name = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Name).FirstOrDefault();
+            string Reg_phone = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Phone).FirstOrDefault();
+            string Reg_email = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Email).FirstOrDefault();
             ViewData["id_get"] = User_id;
             ViewBag.Id = ViewData["id_get"];
+            ViewData["Reg_phone"] = Reg_phone;
+            ViewBag.phone = ViewData["Reg_phone"];
+            ViewData["Reg_email"] = Reg_email;
+            ViewBag.email = ViewData["Reg_email"];
 
             ViewBag.Name = Reg_Name;
-            var objList = db.Transaction.Where(p => p.User_Id == Reg_Id && p.Status=="Pending").Select(j => j.Product_Id).ToList();
-            var productList = new List<Product>();
-            for (var i = 0; i < objList.Count(); i++)
-            {
-                productList.Add( db.Product.Where(v => v.Id == objList[i]).FirstOrDefault());
-            }
-            ViewData["products"] = productList;
+            List<Product> objList = new List<Product>();
+            objList = (from s in db.Product select s).Where(p => p.User_Id == Reg_Id).ToList();
+            //List<Product> productList = new List<Product>();
+            //for (var i = 0; i < objList.Count(); i++)
+            //{
+            //    ViewData["products"] = objList;
+            //    // productList.Add(db.Product.Where(v => v.Id == objList[i]).FirstOrDefault());
+            //}
+            ViewData["products"] = objList;
+            // ViewData["products"] = productList;
             return View();
 
         }

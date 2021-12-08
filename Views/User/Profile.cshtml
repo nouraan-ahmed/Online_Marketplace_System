@@ -8,80 +8,89 @@
     @{
         ViewData["Title"] = "Your Profile";
     }
-
     <div class="container">
         <div class="row ">
             <div class="col-6">
-                <h2 class="text-primary">Products List</h2>
-            </div>
-            <div class="col-6 text-right">
-                <a asp-action="AddProduct" asp-controller="User" role="button" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> &nbsp; Add New Product
-                </a>
+                <h4 class="text-danger">name :- @ViewBag.Name</h4>
+                <h4 class="text-danger">Phone :- @ViewBag.phone</h4>
+                <h4 class="text-danger">Email :- @ViewBag.email</h4>
             </div>
         </div>
 
         <br /><br />
+        <div class="container">
+            <div class="row ">
+                <div class="col-6">
+                    <h2 class="text-primary">Not Sold Products List</h2>
+                </div>
+                <div class="col-6 text-right">
+                    <a asp-action="AddProduct" asp-controller="User" role="button" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> &nbsp; Add New Product
+                    </a>
+                </div>
+            </div>
 
-        @if (products.Count() > 0)
-        {
-            <table class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>
-                            Name
-                        </th>
+            <br /><br />
 
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var obj in products)
-                    {
-                        @if (@obj.User_Id == ViewBag.Id)
+            @if (products.Count() > 0)
+            {
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in products)
                         {
-                            <tr>
-                                <td width="50%">@obj.Name</td>
-                                <td width="10%">@obj.Price</td>
-                                <td width="20%">@obj.Quantity</td>
+                            @if (@obj.User_Id == ViewBag.Id)
+                            {
+                                <tr>
+                                    <td width="50%">@obj.Name</td>
+                                    <td width="10%">@obj.Price</td>
+                                    <td width="20%">@obj.Quantity</td>
 
-                                <td class="text-center">
-                                    <div class="w-75 btn-group" role="group">
-                                        <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                    <td class="text-center">
+                                        <div class="w-75 btn-group" role="group">
+                                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p> No Products you have yet.</p>
-        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p> No Products you have yet.</p>
+            }
 
-        <a asp-action="Payment" asp-controller="Payment" role="button" class="btn mt-4">Pay Now</a>
+            <a asp-action="Payment" asp-controller="Payment" role="button" class="btn mt-4">Pay Now</a>
 
-    </div>
-
-    <div class="form-group">
-
-        <div>
-            <a class="btn btn-primary mx-2" href="/Home/Index">Back to the Home Page</a>
         </div>
 
+        <div class="form-group">
+
+            <div>
+                <a class="btn btn-primary mx-2" href="/Home/Index">Back to the Home Page</a>
+            </div>
+
+        </div>
     </div>
-</div>
 
