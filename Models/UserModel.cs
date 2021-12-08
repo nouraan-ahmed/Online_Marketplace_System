@@ -24,6 +24,6 @@ namespace Online_MarketPlace_System.Models
         [MinLength(4)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-    
+        public double Wallet { get; set; }
     }
 }

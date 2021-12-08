@@ -20,6 +20,8 @@ namespace Online_MarketPlace_System.Models
         public int? User_Id { get; set; }
         [ForeignKey("User_Id")]
         public virtual User User { get; set; }
+        public int Status { get; set; }
+        
 
     }
 }

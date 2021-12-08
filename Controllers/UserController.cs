@@ -49,7 +49,8 @@ namespace Online_MarketPlace_System.Controllers
                 Name = usm.Name,
                 Email = usm.Email,
                 Phone = usm.Phone,
-                Password = BCrypt.Net.BCrypt.HashPassword(usm.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(usm.Password),
+                Wallet = 0
             };
             TempData["user_reg_id"] = db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).SingleOrDefault();
             var EmailExist = db.User.ToList().Any(u => u.Email == us.Email);
@@ -133,9 +134,15 @@ namespace Online_MarketPlace_System.Controllers
             int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
             string User_Email = HttpContext.Session.GetString("User_Email");
             var User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+            var User_status = db.Product.Where(p => p.User_Id == Reg_Id).Select(o => o.Status).FirstOrDefault();
+            ViewData["User_status"] = User_status;
+            ViewBag.status = ViewData["User_status"];
             string Reg_Name = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Name).FirstOrDefault();
             string Reg_phone = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Phone).FirstOrDefault();
             string Reg_email = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Email).FirstOrDefault();
+            double Reg_wallet = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Wallet).FirstOrDefault();
+            ViewData ["Reg_wallet"] = Reg_wallet;
+            ViewBag.wallet = ViewData["Reg_wallet"];
             ViewData["id_get"] = User_id;
             ViewBag.Id = ViewData["id_get"];
             ViewData["Reg_phone"] = Reg_phone;
