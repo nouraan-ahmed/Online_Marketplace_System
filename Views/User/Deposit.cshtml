@@ -1,0 +1,47 @@
+﻿@model Online_MarketPlace_System.Models.User
+
+@{
+    ViewData["Title"] = "Deposit Cash";
+}
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="~/css/Payment.css" rel="stylesheet" />
+    <input asp-for="Id" hidden />
+    <div class="container mb-5 mt-5">
+        <div id="Checkout" class="inline">
+            <h1>Pay Invoice</h1>
+            <div class="card-row">
+                <span class="visa"></span>
+                <span class="mastercard"></span>
+                <span class="amex"></span>
+                <span class="discover"></span>
+            </div>
+            <form asp-action="Deposit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label for="PaymentAmount">Payment amount $</label>
+                    <div class="amount-placeholder">
+                        <input asp-for="Wallet" class="form-control" />
+                        <span asp-validation-for="Wallet" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="accept-policy">
+                    <input asp-action="Deposit" asp-controller="User" value="Add to My Wallet" class="btn btn-block btn-success submit-button" type="submit">
+                </div>
+                <div class="accept-policy">
+                    <a asp-action="Profile">Back</a>
+                </div>
+            </form>
+        </div>
+   
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+    </div>
+

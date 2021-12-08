@@ -12,7 +12,7 @@ namespace Online_MarketPlace_System.Controllers
     {
         private readonly MarketplaceDbContext db;
         private readonly MarketDbContext dblow;
-        public UserController(MarketplaceDbContext db,MarketDbContext db2)
+        public UserController(MarketplaceDbContext db, MarketDbContext db2)
         {
             this.db = db;
             this.dblow = db2;
@@ -23,7 +23,7 @@ namespace Online_MarketPlace_System.Controllers
             return View();
         }
 
-       
+
 
         [HttpGet]
         public IActionResult Part()
@@ -54,7 +54,7 @@ namespace Online_MarketPlace_System.Controllers
             };
             TempData["user_reg_id"] = db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).SingleOrDefault();
             var EmailExist = db.User.ToList().Any(u => u.Email == us.Email);
-            var user_id =0;
+            var user_id = 0;
             if (EmailExist)
             {
                 //throw error
@@ -79,7 +79,7 @@ namespace Online_MarketPlace_System.Controllers
 
             }
 
-           
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -104,13 +104,13 @@ namespace Online_MarketPlace_System.Controllers
             HttpContext.Session.SetString("User_Email", usm.Email);
             if (exist)
             {
-                 var Data = db.User.Where(f => f.Email == usm.Email).Select(s => new { s.Password, s.Id }).ToList();
+                var Data = db.User.Where(f => f.Email == usm.Email).Select(s => new { s.Password, s.Id }).ToList();
                 if (BCrypt.Net.BCrypt.Verify(usm.Password, Data[0].Password))
                 {
                     User us = new User();
                     HttpContext.Session.SetInt32("Reg_Id", Data[0].Id);
                     //return Redirect("/Home/Index");
-                    return RedirectToAction("Home","Home");
+                    return RedirectToAction("Home", "Home");
 
                 }
 
@@ -128,6 +128,11 @@ namespace Online_MarketPlace_System.Controllers
         {
             return View();
         }
+
+        public IActionResult Deposit()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult Profile(User usm)
         {
@@ -141,7 +146,7 @@ namespace Online_MarketPlace_System.Controllers
             string Reg_phone = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Phone).FirstOrDefault();
             string Reg_email = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Email).FirstOrDefault();
             double Reg_wallet = db.User.Where(l => l.Id == Reg_Id).Select(i => i.Wallet).FirstOrDefault();
-            ViewData ["Reg_wallet"] = Reg_wallet;
+            ViewData["Reg_wallet"] = Reg_wallet;
             ViewBag.wallet = ViewData["Reg_wallet"];
             ViewData["id_get"] = User_id;
             ViewBag.Id = ViewData["id_get"];
@@ -265,6 +270,23 @@ namespace Online_MarketPlace_System.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Profile");
             }
+
+
+        }
+
+        [HttpPost]
+        public IActionResult Deposit(int? id, User value)
+        {
+            var obj = db.User.Find(id);
+            obj.Wallet += value.Wallet;
+           // double Wallet = db.User.Where(l => l.Id == id).Select(i => i.Wallet).FirstOrDefault();
+            //Wallet += value.Wallet;
+           // obj.Wallet = old_wallet;
+  
+                db.Update(obj);
+                db.SaveChanges();
+                return RedirectToAction("Profile");
+           
 
         }
 
