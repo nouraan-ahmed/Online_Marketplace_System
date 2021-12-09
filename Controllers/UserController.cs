@@ -129,8 +129,77 @@ namespace Online_MarketPlace_System.Controllers
             return View();
         }
 
+        public IActionResult Report(int id)
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Report(Transaction t)
+        {
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+           // string User_Email = HttpContext.Session.GetString("User_Email");
+            var Product_id = db.Transaction.Where(p => p.User_Id == Reg_Id).Select(o => o.Product_Id).FirstOrDefault();
+            //var User_status = db.Product.Where(p => p.User_Id == Reg_Id).Select(o => o.Status).FirstOrDefault();
+            //  ViewData["User_status"] = User_status;
+            //ViewBag.status = ViewData["User_status"];
+            int User_Id = (int)db.Transaction.Where(l => l.Product_Id == Product_id).Select(i => i.User_Id).FirstOrDefault();
+            int Seller_Id = db.Transaction.Where(l => l.Product_Id == Product_id).Select(i => i.Seller_Id).FirstOrDefault();
+            int Product_Id = (int)db.Transaction.Where(l => l.Product_Id == Product_id).Select(i => i.Product_Id).FirstOrDefault();
+            string Status = db.Transaction.Where(l => l.Product_Id == Product_id).Select(i => i.Status).FirstOrDefault();
+            ViewData["User_Id"] = User_Id;
+            ViewBag.User_Id = ViewData["User_Id"];
+            ViewData["Seller_Id"] = Seller_Id;
+            ViewBag.Seller_Id = ViewData["Seller_Id"];
+            ViewData["Product_Id"] = Product_Id;
+            ViewBag.Product_Id = ViewData["Product_Id"];
+            ViewData["Status"] = Status;
+            ViewBag.Status = ViewData["Status"];
+
+           // ViewBag.Name = Reg_Name;
+            //List<Product> objList = new List<Product>();
+          //  objList = (from s in db.Product select s).Where(p => p.User_Id == Reg_Id).ToList();
+            //List<Product> productList = new List<Product>();
+            //for (var i = 0; i < objList.Count(); i++)
+            //{
+            //    ViewData["products"] = objList;
+            //    // productList.Add(db.Product.Where(v => v.Id == objList[i]).FirstOrDefault());
+            //}
+          //  ViewData["products"] = objList;
+            // ViewData["products"] = productList;
+            return View();
+            /* int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+             string User_Email = HttpContext.Session.GetString("User_Email");
+             var User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+             int User_Id = (int)db.Transaction.Where(l => l.Product_Id == id).Select(i => i.User_Id).FirstOrDefault();
+             int Seller_Id = db.Transaction.Where(l => l.Product_Id == id).Select(i => i.Seller_Id).FirstOrDefault();
+             int Product_Id = (int )db.Transaction.Where(l => l.Product_Id == id).Select(i => i.Product_Id).FirstOrDefault();
+             string Status = db.Transaction.Where(l => l.Product_Id == id).Select(i => i.Status).FirstOrDefault();
+             ViewData["User_Id"] = User_Id;
+             ViewBag.User_Id = ViewData["User_Id"];
+             ViewData["Seller_Id"] = Seller_Id;
+             ViewBag.Seller_Id = ViewData["Seller_Id"];
+             ViewData["Product_Id"] = Product_Id;
+             ViewBag.Product_Id = ViewData["Product_Id"];
+             ViewData["Status"] = Status;
+             ViewBag.Status = ViewData["Status"];
+
+              //= new Transaction();
+            // tran.User_Id = tr.User_Id;
+             //tran.Seller_Id = tr.Seller_Id;
+             //tran.Product_Id = tr.Product_Id;
+             //tran.Status = tr.Status;
+
+            /// return View(tran);
+
+            return View();*/
+        }
+
         public IActionResult Deposit()
         {
+
             return View();
         }
         [HttpGet]

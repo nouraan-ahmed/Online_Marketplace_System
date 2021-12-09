@@ -1,0 +1,40 @@
+﻿@model Online_MarketPlace_System.Models.Transaction
+
+
+@{
+    ViewData["Title"] = "Sales Report";
+}
+
+<div>
+    <h4 class="text-break">sales report</h4>
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    My Code
+                </th>
+
+                <th>
+                    Seller Code
+                </th>
+                <th>
+                    Product Code
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            <tr>
+                <td width="50%">@ViewBag.User_Id</td>
+                <td width="10%">@ViewBag.Seller_Id</td>
+                <td width="10%">@ViewBag.Product_Id</td>
+                <td width="20%">@ViewBag.Status</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
