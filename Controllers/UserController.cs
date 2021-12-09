@@ -166,6 +166,8 @@ namespace Online_MarketPlace_System.Controllers
             //}
             ViewData["products"] = objList;
             // ViewData["products"] = productList;
+            var otherItems = db.Product.Where(a => a.SecondaryUser == Reg_Id).Select(a => a).ToList();
+            ViewData["otherStoresProducts"] = otherItems;
             return View();
 
         }

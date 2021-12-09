@@ -1,5 +1,6 @@
 ﻿@{
     var products = (List<Product>)ViewData["products"];
+    var otherStoresProducts = (List<Product>)ViewData["otherStoresProducts"];
 }
 
 <div class="container">
@@ -59,25 +60,46 @@
                         <tbody>
                             @foreach (var obj in products)
                             {
-                                @if ((@obj.User_Id == ViewBag.Id) && (obj.Status == 0))
-                                {
-                                    <tr>
-                                        <td width="50%">@obj.Name</td>
-                                        <td width="10%">@obj.Price</td>
-                                        <td width="20%">@obj.Quantity</td>
+                        @if ((@obj.User_Id == ViewBag.Id) && (obj.Status == 0))
+                        {
+                        <tr>
+                            <td width="50%">@obj.Name</td>
+                            <td width="10%">@obj.Price</td>
+                            <td width="20%">@obj.Quantity</td>
 
-                                        <td class="text-center">
-                                            <div class="w-75 btn-group" role="group">
-                                                <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
+                            <td class="text-center">
+                                <div class="w-75 btn-group" role="group">
+                                    <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>}
+
+                                            @foreach (var product in otherStoresProducts)
+                                            {
+                                                @if (product.Status == 0)
+                                                {
+                                                <tr>
+                                                    <td width="50%">@product.Name</td>
+                                                    <td width="10%">@product.Price</td>
+                                                    <td width="20%">@product.Quantity</td>
+
+                                                    <td class="text-center">
+                                                        <div class="w-75 btn-group" role="group">
+                                                            <a asp-route-Id="@product.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a asp-route-Id="@product.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
+                                                                <i class="far fa-trash-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                }}
                             }
                         </tbody>
                     </table>
@@ -102,17 +124,35 @@
                         <tbody>
                             @foreach (var obj in products)
                             {
-                                @if ((@obj.User_Id == ViewBag.Id) && (obj.Status == 1))
-                                {
-                                    <tr>
-                                        <td width="50%">@obj.Name</td>
-                                        <td width="10%">@obj.Price</td>
-                                        <td width="20%">@obj.Quantity</td>
+                        @if ((@obj.User_Id == ViewBag.Id) && (obj.Status == 1))
+                        {
+                        <tr>
+                            <td width="50%">@obj.Name</td>
+                            <td width="10%">@obj.Price</td>
+                            <td width="20%">@obj.Quantity</td>
 
 
-                                    </tr>
-                                }
-                            }
+                        </tr>}}
+                            @foreach (var product in otherStoresProducts)
+                            {
+                        @if (product.Status == 1)
+                        {
+                        <tr>
+                            <td width="50%">@product.Name</td>
+                            <td width="10%">@product.Price</td>
+                            <td width="20%">@product.Quantity</td>
+
+                            <td class="text-center">
+                                <div class="w-75 btn-group" role="group">
+                                    <a asp-route-Id="@product.Id" asp-action="Edit" class="btn btn-primary mx-2" vlaue="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-route-Id="@product.Id" asp-action="Delete" class="btn btn-danger mx-2" vlaue="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>}}
                         </tbody>
                     </table>
                 }
