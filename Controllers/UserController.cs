@@ -217,15 +217,18 @@ namespace Online_MarketPlace_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ProductModel obj)
         {
-            Product pro = new Product
-            {
-                Name = obj.Name,
-                Price = obj.Price,
-                Quantity = obj.Quantity,
-                Description = obj.Description,
-                Category = obj.Category,
-                Id = obj.Id,
-            };
+            string User_Email = HttpContext.Session.GetString("User_Email");
+            int User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
+            Product pro = new Product();
+            pro.Name = obj.Name;
+            pro.Price = obj.Price;
+            pro.Quantity = obj.Quantity;
+            pro.Description = obj.Description;
+            pro.Category = obj.Category;
+            pro.Id = obj.Id;
+            pro.Image = "https://www.lg.com/lg5-common/images/common/product-default-list-350.jpg";
+            pro.User_Id =User_id;
+        
             if (ModelState.IsValid)
             {
                 db.Update(pro);

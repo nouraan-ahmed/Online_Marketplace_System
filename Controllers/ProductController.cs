@@ -44,8 +44,23 @@ namespace Online_MarketPlace_System.Controllers
             
             Product p = new Product();
             p = _db.Product.FirstOrDefault(s => s.Id == id);
-            p.User_Id = Reg_Id;
-            _db.Update(p);
+            if( p.User_Id == tr.Seller_Id)
+            {
+                p.Status = 1;
+                _db.Update(p);
+                _db.SaveChanges();
+            }
+            Product pro = new Product();
+            pro.Name = _db.Product.Where(o=>o.Id== id).Select(p=>p.Name).FirstOrDefault();
+            pro.Price = _db.Product.Where(o => o.Id == id).Select(p => p.Price).FirstOrDefault();
+            pro.Quantity = 1;
+            pro.Description = _db.Product.Where(o => o.Id == id).Select(p => p.Description).FirstOrDefault();
+            pro.Category = _db.Product.Where(o => o.Id == id).Select(p => p.Category).FirstOrDefault();
+           // pro.Id = id;
+            pro.Image = "https://www.lg.com/lg5-common/images/common/product-default-list-350.jpg";
+            pro.User_Id = Reg_Id;
+
+            _db.Add(pro);
             _db.SaveChanges();
 
             return RedirectToAction("Profile","User");

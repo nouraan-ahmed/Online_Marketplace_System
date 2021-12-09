@@ -74,11 +74,12 @@ namespace Online_MarketPlace_System.Controllers
             var objList = _db.Transaction.Where(p => p.User_Id == Reg_Id).ToList();
 
             var productList = new List<Transaction>();
-
+          
             for (var i = 0; i < objList.Count(); i++)
             {
                 tr=_db.Transaction.FirstOrDefault(s => s.Status=="Pending");
                 tr.Status = "Done";
+               
                 _db.Update(tr);
                 _db.SaveChanges();
             }
