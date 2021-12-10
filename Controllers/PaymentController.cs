@@ -26,7 +26,7 @@ namespace Online_MarketPlace_System.Controllers
         public IActionResult Payment()
         {
             int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
-            var products = (from p in _db.Transaction select p).Where(f => f.User_Id == Reg_Id && f.Status=="Pending").Select(h => h.Product_Id).ToList();
+            var products = (from p in _db.Transaction select p).Where(f => f.User_Id == Reg_Id).Select(h => h.Product_Id).ToList();
 
             double userMoney = _db.Payment.Where(v => v.Id == Reg_Id).Select(d => d.Money).FirstOrDefault();
             double totalMoney = 0;
