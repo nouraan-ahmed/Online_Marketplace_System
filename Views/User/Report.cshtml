@@ -1,40 +1,41 @@
-﻿@model Online_MarketPlace_System.Models.Transaction
+﻿@model Online_MarketPlace_System.Models.TransactionModel
 
 
 @{
     ViewData["Title"] = "Sales Report";
 }
 
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input asp-for="Status" hidden />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Seller Name</label>
+                <input asp-for="Seller_Name" disabled class="form-control" />
+                <span asp-validation-for="Seller_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Buyer_Name</label>
+                <input asp-for="Buyer_Name" disabled class="form-control" />
+                <span asp-validation-for="Buyer_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Product Name</label>
+                <input asp-for="Product_Name" disabled class="form-control" />
+                <span asp-validation-for="Product_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Status</label>
+                <input asp-for="Status" disabled class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+        </form>
+    </div>
+</div>
 <div>
-    <h4 class="text-break">sales report</h4>
-    <table class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>
-                    My Code
-                </th>
-
-                <th>
-                    Seller Code
-                </th>
-                <th>
-                    Product Code
-                </th>
-                <th>
-                    Status
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-            <tr>
-                <td width="50%">@ViewBag.User_Id</td>
-                <td width="10%">@ViewBag.Seller_Id</td>
-                <td width="10%">@ViewBag.Product_Id</td>
-                <td width="20%">@ViewBag.Status</td>
-            </tr>
-
-        </tbody>
-    </table>
+    <a class="btn btn-primary mx-2" href="/User/Profile">Back</a>
 </div>

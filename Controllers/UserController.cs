@@ -129,10 +129,38 @@ namespace Online_MarketPlace_System.Controllers
             return View();
         }
 
+        public IActionResult Report(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            int d = db.Transaction.Where(p => p.Product_Id == id).Select(o => o.Id).FirstOrDefault();
+
+            Transaction inst = db.Transaction.Find(d);
+            TransactionModel tran = new TransactionModel();
+            tran.Buyer_Name = db.User.Where(p => p.Id == inst.Seller_Id).Select(o => o.Name).FirstOrDefault();
+            tran.Seller_Name = db.User.Where(p => p.Id == inst.User_Id).Select(o => o.Name).FirstOrDefault();
+            tran.Product_Name = db.Product.Where(p => p.Id == inst.Product_Id).Select(o => o.Name).FirstOrDefault();
+            tran.Status = inst.Status;
+
+
+            // Product instance = _db.Product.Include(u => u.Quantity).Include(u => u.Price).FirstOrDefault(u => u.Id == id);
+
+            if (inst.Id == 0)
+            {
+                return NotFound();
+            }
+
+            return View(tran);
+        }
+
         public IActionResult Deposit()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Profile(User usm)
         {
