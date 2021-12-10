@@ -200,42 +200,6 @@ namespace Online_MarketPlace_System.Controllers
             return View(entity);
         }
 
-        public IActionResult Report(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            int d = db.Transaction.Where(p => p.Product_Id == id).Select(o => o.Id).FirstOrDefault();
-
-            Transaction inst = db.Transaction.Find(d);
-            // Product instance = _db.Product.Include(u => u.Quantity).Include(u => u.Price).FirstOrDefault(u => u.Id == id);
-
-            if (inst.Id == 0)
-            {
-                return NotFound();
-            }
-
-            return View(inst);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Report(Transaction obj)
-        {
-            //string User_Email = HttpContext.Session.GetString("User_Email");
-          //  int User_id = db.User.Where(p => p.Email == User_Email).Select(o => o.Id).FirstOrDefault();
-            Transaction pro = new Transaction();
-            pro.User_Id = obj.User_Id;
-            pro.Product_Id = obj.Product_Id;
-            pro.Seller_Id = obj.Seller_Id;
-            pro.Status = obj.Status;
-            
-            return View(pro);
-
-        }
-
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
