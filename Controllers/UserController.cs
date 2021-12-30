@@ -313,9 +313,10 @@ namespace Online_MarketPlace_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult Deposit(int? id, User value)
+        public IActionResult Deposit(User value)
         {
-            var obj = db.User.Find(id);
+            int Reg_Id = (int)HttpContext.Session.GetInt32("Reg_Id");
+            var obj = db.User.Find(Reg_Id);
             obj.Wallet += value.Wallet;
            // double Wallet = db.User.Where(l => l.Id == id).Select(i => i.Wallet).FirstOrDefault();
             //Wallet += value.Wallet;
