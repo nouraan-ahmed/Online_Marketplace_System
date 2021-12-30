@@ -52,7 +52,6 @@ namespace Online_MarketPlace_System.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(usm.Password),
                 Wallet = 0
             };
-            TempData["user_reg_id"] = db.User.Where(o => o.Name == usm.Name).Select(p => p.Id).SingleOrDefault();
             var EmailExist = db.User.ToList().Any(u => u.Email == us.Email);
             var user_id = 0;
             if (EmailExist)
@@ -66,14 +65,20 @@ namespace Online_MarketPlace_System.Controllers
             else
             {
                 db.Add(us);
+                dblow.Add(us);
                 db.SaveChanges();
+                dblow.SaveChanges();
                 user_id = us.Id;
                 Payment p = new Payment();
                 p.User_Id = user_id;
                 p.Money = 100000;
                 p.Status = "Credit Card";
                 db.Add(p);
+                dblow.Add(p);
                 db.SaveChanges();
+                dblow.SaveChanges();
+                TempData["user_reg_id"] = us.Id;
+                HttpContext.Session.SetString("User_Email", us.Email);
                 HttpContext.Session.SetInt32("Reg_Id", (int)TempData["user_reg_id"]);
                 return RedirectToAction("Home", "Home");
 
